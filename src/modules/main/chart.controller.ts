@@ -19,6 +19,7 @@ export class ChartController {
         studentList.sort(sortBy('countInOut'));
         //console.log(studentList);
         for (var i = 0; i < 5; i++){
+            if(studentList[studentList.length - 1-i])
             arraytop.push(studentList[studentList.length - 1-i]);
         }
         var sumofinout = 0;
@@ -29,6 +30,7 @@ export class ChartController {
                 currentinlibrary++;
             }
         }
+        console.log(arraytop);
         return {
             currentinlibrary:currentinlibrary,
             sumofinout:sumofinout,
