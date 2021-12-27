@@ -1,0 +1,171 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title AdminLTE 3 | DataTables
+  // Google Font: Source Sans Pro
+  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback')
+  // Font Awesome
+  link(rel='stylesheet' href='/plugins/fontawesome-free/css/all.min.css')
+  // DataTables
+  link(rel='stylesheet' href='/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')
+  link(rel='stylesheet' href='/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')
+  link(rel='stylesheet' href='/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')
+  // Theme style
+  link(rel='stylesheet' href='/dist/css/adminlte.min.css')
+  block style
+.wrapper
+  // Navbar
+  nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
+    // Left navbar links
+    ul.navbar-nav
+      li.nav-item
+        a.nav-link(data-widget='pushmenu' href='#' role='button')
+          i.fas.fa-bars
+      li.nav-item.d-none.d-sm-inline-block
+        a.nav-link(href='/student') Home
+    // Right navbar links
+    ul.navbar-nav.ml-auto
+      // Navbar Search
+      li.nav-item
+        a.nav-link(data-widget='fullscreen' href='#' role='button')
+          i.fas.fa-expand-arrows-alt
+      li.nav-item.d-none.d-sm-inline-block
+        a.nav-link(href='/logout') Logout
+  // /.navbar
+  // Main Sidebar Container
+  aside.main-sidebar.sidebar-dark-primary.elevation-4
+    // Brand Logo
+    a.brand-link(href='/seatingmap')
+      img.brand-image.img-circle.elevation-3(src='/dist/img/logo-CSE.png' alt='CSE Logo' style='opacity: .8')
+      span.brand-text.font-weight-light HCMUT CSE
+    // Sidebar
+    .sidebar
+      // Sidebar user (optional)
+      .user-panel.mt-3.pb-3.mb-3.d-flex
+        .image
+          img.img-circle.elevation-2(src='/dist/img/logo-library.png' alt='Library logo')
+        .info
+          a.d-block(href='/seatingmap') Library 608
+      // Sidebar Menu
+      nav.mt-2
+        ul.nav.nav-pills.nav-sidebar.flex-column(data-widget='treeview' role='menu' data-accordion='false')
+          //
+            Add icons to the links using the .nav-icon class
+            with font-awesome or any other icon font library
+          li.nav-item
+            a.nav-link(href='/currentlibrary')
+              i.nav-icon.fas.fa-running
+              //- Sửa logo tại đây (Dấu cách thành dấu chấm)
+              p
+                | Quản lý Ra/ Vào 
+          li.nav-item
+            a.nav-link(href='/student')
+              i.nav-icon.fas.fa-user-graduate 
+              p
+                | Quản lý Sinh viên
+          li.nav-item
+            a.nav-link(href='/user')
+              i.nav-icon.fas.fa-users-cog
+              p
+                | Quản lý Người dùng
+          li.nav-item
+            a.nav-link(href='chart')
+              i.nav-icon.fas.fa-cube
+              p
+                | Thống kê
+            //-     i.fas.fa-angle-left.right
+            //- ul.nav.nav-treeview
+            //-   li.nav-item
+            //-     a.nav-link(href='/chart')
+            //-       i.far.fa-circle.nav-icon
+            //-       p Tần suất ra vào theo tuần
+            //-   li.nav-item
+            //-     a.nav-link(href='/chart')
+            //-       i.far.fa-circle.nav-icon
+            //-       p Tần suất ra vào theo tuần theo tháng
+            
+          li.nav-item
+            a.nav-link(href='/seatingmap')
+              i.nav-icon.fas.fa-map-marked-alt
+              p
+                | Sơ đồ chỗ ngồi
+                i.fas.fa-angle-left.right
+            ul.nav.nav-treeview
+              li.nav-item
+                a.nav-link(href='/library608')
+                  i.far.fa-circle.nav-icon
+                  p Dành cho sinh viên
+              li.nav-item
+                a.nav-link(href='/seatingmap')
+                  i.far.fa-circle.nav-icon
+                  p Dành cho admin
+          
+            // /.sidebar-menu
+            // /.sidebar
+        // Content Wrapper. Contains page content
+        //- Phần khác biệt giữa các file
+    .content-wrapper
+  block content 
+        //- block content phải bằng hàng với footer. File này khó từ đầu copy theo space
+        //- Phần khác biệt giữa các file
+  footer.main-footer
+    .float-right.d-none.d-sm-block
+      b Version
+      |  3.1.0 
+      a(href='https://adminlte.io') AdminLTE.io
+    strong
+      | Copyright &copy; 2021 Khoa KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH.
+    br
+    em 
+      | Designed and Developed by Tran Ngoc Bao Duy - Nguyen Cong Thanh - Ha Duy Anh
+      //- | All rights reserved.
+  // Control Sidebar
+  aside.control-sidebar.control-sidebar-dark
+    // Control sidebar content goes here
+  // /.control-sidebar
+// ./wrapper
+// jQuery
+script(src='/plugins/jquery/jquery.min.js')
+// Bootstrap 4
+script(src='/plugins/bootstrap/js/bootstrap.bundle.min.js')
+// DataTables  & Plugins
+script(src='/plugins/datatables/jquery.dataTables.min.js')
+script(src='/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')
+script(src='/plugins/datatables-responsive/js/dataTables.responsive.min.js')
+script(src='/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')
+script(src='/plugins/datatables-buttons/js/dataTables.buttons.min.js')
+script(src='/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')
+script(src='/plugins/jszip/jszip.min.js')
+script(src='/plugins/pdfmake/pdfmake.min.js')
+script(src='/plugins/pdfmake/vfs_fonts.js')
+script(src='/plugins/datatables-buttons/js/buttons.html5.min.js')
+script(src='/plugins/datatables-buttons/js/buttons.print.min.js')
+script(src='/plugins/datatables-buttons/js/buttons.colVis.min.js')
+// AdminLTE App
+script(src='/dist/js/adminlte.min.js')
+block script
+//-script(src='/js/faculty.js') 
+
+
+
+//- Link sang file js custom
+//- // AdminLTE for demo purposes
+//- script(src='/dist/js/demo.js')
+//- // Page specific script
+//- script.
+//-   $(function () {
+//-   $("#example1").DataTable({
+//-   "responsive": true, "lengthChange": false, "autoWidth": false,
+//-   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+//-   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+//-   $('#example2').DataTable({
+//-   "paging": true,
+//-   "lengthChange": false,
+//-   "searching": false,
+//-   "ordering": true,
+//-   "info": true,
+//-   "autoWidth": false,
+//-   "responsive": true,
+//-   });
+//-   });

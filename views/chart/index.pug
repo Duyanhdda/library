@@ -1,0 +1,121 @@
+extends ../layout.pug
+
+block content
+  .content-wrapper
+    // Content Header (Page header)
+    section.content-header
+      .container-fluid
+        .row.mb-2
+          .col-sm-6
+            h1 Thống Kê tần suất ra vào thư viện
+          .col-sm-6
+            ol.breadcrumb.float-sm-right
+              li.breadcrumb-item
+                a(href='#') Home
+              li.breadcrumb-item.active Thống Kê tần suất ra vào thư viện
+      // /.container-fluid
+    // Main content
+    section.content
+      .container-fluid
+        .row
+          .col-12
+            .card
+              .card-body
+                .row 
+                  .col-md-5
+                    .card.card-success
+                      .card-header
+                          h3.card-title Thống kê số lần ra vào trong tuần
+                          .card-tools
+                            button.btn.btn-tool(type='button' data-card-widget='collapse')
+                                i.fas.fa-minus
+                            button.btn.btn-tool(type='button' data-card-widget='remove')
+                                i.fas.fa-times
+                      .card-body
+                          .chart
+                          canvas#barChart(style='min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;')
+                      // /.card-body
+                  .col-md-7
+                    .card.card-primary
+                      .card-header
+                        h3.card-title Thống kê số lần ra vào theo tháng
+                        .card-tools
+                          button.btn.btn-tool(type='button' data-card-widget='collapse')
+                            i.fas.fa-minus
+                          button.btn.btn-tool(type='button' data-card-widget='remove')
+                            i.fas.fa-times
+                      .card-body
+                        .chart
+                          canvas#areaChart(style='min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;')
+                      // /.card-body
+                .row 
+                  .col-7
+                    // jQuery Knob
+                    .card
+                      .card-header
+                        h3.card-title
+                          i.far.fa-chart-bar
+                          |                   
+                        .card-tools
+                          button.btn.btn-tool(type='button' data-card-widget='collapse')
+                            i.fas.fa-minus
+                          button.btn.btn-tool(type='button' data-card-widget='remove')
+                            i.fas.fa-times
+                      // /.card-header
+                      .card-body
+                        .row
+                          .col-6.col-md-4.text-center
+                            input.knob(type='text' value='30' data-width='90' data-height='90' data-fgcolor='#3c8dbc')
+                            .knob-label Số lượt truy cập
+                          // ./col
+                          .col-6.col-md-4.text-center
+                            input.knob(type='text' value=currentinlibrary  data-max='64' data-width='90' data-height='90' data-fgcolor='#f56954')
+                            .knob-label Tổng số sinh viên trong thư viện
+                          // ./col
+                          .col-6.col-md-4.text-center
+                            input.knob(type='text' value=64-currentinlibrary data-min='0' data-max='64' data-width='90' data-height='90' data-fgcolor='#00a65a')
+                            .knob-label Tổng số ghế trống trong thư viện
+                        .row
+                            .col-7.text-center
+                              input.knob(type='text' value=sumofinout data-max='1000' data-width='90' data-height='90' data-fgcolor='#932ab6')
+                              .knob-label Tổng số lượt ra vào thư viện
+                            // ./col
+                            .col-3.text-center
+                              input.knob(type='text' value=sumofstudent  data-max='2000' data-width='90' data-height='90' data-fgcolor='#39CCCC')
+                              .knob-label Tổng số sinh viên
+                  .col-5 
+                    .card
+                      .card-header.border-0(style = 'color: white; background-color: #02569B')
+                        h3.card-title Top sinh viên vào nhiều trong tuần
+                        .card-tools
+                      .card-body.table-responsive.p-0
+                        table.table.table-striped.table-valign-middle
+                          thead
+                            tr
+                              th Họ và tên đệm 
+                              th Tên
+                              th Mã số sinh viên
+                              th Số lượt ra vào
+                          tbody
+                            each student in arraytop
+                              tr
+                                td= student.lastName
+                                td= student.firstName
+                                td.text-center= student.id
+                                td.text-center= student.countInOut
+                               
+                            
+                        
+
+
+
+
+
+block style 
+    link(rel="stylesheet", href="/plugins/select2/css/select2.min.css")
+    link(rel="stylesheet", href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css")
+block script 
+    script(src="/plugins/select2/js/select2.full.min.js")
+    script(src="/js/chart/index.js")
+    script(src='/plugins/chart.js/Chart.min.js')
+    script(src='/plugins/jquery-knob/jquery.knob.min.js')

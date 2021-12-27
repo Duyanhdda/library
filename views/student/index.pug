@@ -1,0 +1,200 @@
+extends ../layout.pug
+
+block content
+  .content-wrapper
+    // Content Header (Page header)
+    section.content-header
+      .container-fluid
+        .row.mb-2
+          .col-sm-6
+            h1 Quản lý Sinh viên
+          .col-sm-6
+            ol.breadcrumb.float-sm-right
+              li.breadcrumb-item
+                a(href='#') Home
+              li.breadcrumb-item.active Quản lý Sinh viên
+      // /.container-fluid
+    // Main content
+    section.content
+      .container-fluid
+        .row
+          .col-12             
+            .card
+              // /.card-header
+              .card-body
+                .row
+                  .col-md-10
+                    // Button trigger modal
+                    button.btn.btn-primary.custom-button(type='button' data-toggle='modal' data-target='#addStudentModal')
+                        | Thêm mới
+                    // Button trigger modal
+                    button.btn.btn-primary.custom-button(type='button' data-toggle='modal' data-target='#uploadFileModal')
+                        | Upload file
+                  .col-md-2
+                    button.btn.btn-danger.custom-button(type='button' data-toggle='modal' data-target='#deleteAllStudentModal')
+                        | Delete All
+                // Modal Delete All student 
+                #deleteAllStudentModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='deleteAllStudentModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content.bg-danger
+                            .modal-header
+                                h5.modal-title Xóa
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/student/deleteAll", method = "post")
+                                .modal-body
+                                    input(type="hidden", name="id")
+                                    p Bạn chắc chưa ?
+                                .modal-footer
+                                    button.btn.btn-danger.btn-outline-light(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-danger.btn-outline-light(type='submit') Xác nhận
+                // Modal upload file 
+                #uploadFileModal.modal.fade(role='dialog' aria-labelledby='uploadFileModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5#uploadFileModal.modal-title Upload file
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/student/upload", method = "post",enctype='multipart/form-data')
+                                .modal-body
+                                    .row
+                                        .col-md-12
+                                            .form-group
+                                              label(for='exampleInputFile') File input
+                                              .input-group
+                                                .custom-file
+                                                  input#exampleInputFile.custom-file-input(type='file', name="sampleFile")
+                                                  label.custom-file-label(for='exampleInputFile') Choose file
+                                                .input-group-append
+                                                  span.input-group-text Upload
+                                            .modal-footer
+                                                  button.btn.btn-primary(type='submit') Upload 
+                                                  button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
+                             
+                // Modal add Student
+                
+                table#tab-students.table.table-bordered.table-striped
+                  thead
+                    tr.text-center
+                      th MSSV
+                      th Họ và tên lót
+                      th Tên 
+                      th Email
+                      th Số lượt ra vào thư viện
+                      th Thao tác
+                  tbody 
+                    each student in studentList
+                      tr.text-center
+                        td= student.id
+                        td= student.lastName
+                        td= student.firstName
+                        td= student.email
+                        td= student.countInOut
+                        td.text-center
+                          btn.btn-history.btn.btn-danger.btn-xs(style="margin-right: 5px", data-id = student.id, data-last-name = student.lastName, data-first-name = student.firstName, data-count-in-out = student.countInOut)
+                            i.fas.fa-history
+                          btn.btn-edit.btn.btn-primary.btn-xs(style="margin-right: 5px", data-id = student.id, data-last-name = student.lastName, data-first-name = student.firstName, data-email = student.email)
+                            i.fas.fa-edit
+                          btn.btn-delete.btn.btn-danger.btn-xs(style="margin-right: 5px", data-id = student.id)
+                            i.fas.fa-trash
+                            
+                #HistoryStudentModal.modal.fade(role='dialog' aria-labelledby='HistoryStudentModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5.modal-title Lịch sử ra vào thư viện
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form
+                                .modal-body
+                                    .row 
+                                        .col-md-6
+                                            .form-group
+                                                label Họ và tên lót
+                                                input.form-control(type='text' placeholder='Họ và tên lót' name = 'lastName', readonly)
+                                        .col-md-6
+                                            .form-group
+                                                label Tên
+                                                input.form-control(type='text' placeholder='Tên' name = 'firstName', readonly)
+                                    .row
+                                        .col-md-6
+                                            .form-group
+                                                label Mã số SV
+                                                input.form-control(type='text', name = 'id', readonly)
+                                        .col-md-6
+                                            .form-group
+                                                label Tổng số lượt ra vào
+                                                input.form-control(type='text', name = 'countInOut', readonly)
+                                    .row
+                                        .col-md-12
+                                            table#historyModal.table.table-bordered.table-striped
+                                              thead
+                                                tr.text-center
+                                                  th Lượt vào
+                                                  th Thời gian
+                                .modal-footer
+                                    button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
+
+                #EditStudentModal.modal.fade(role='dialog' aria-labelledby='EditStudentModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5.modal-title Chỉnh sửa
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/student/edit",method="post") 
+                                .modal-body
+                                    .row     
+                                        .col-md-6 
+                                            .form-group
+                                                label Mã số SV
+                                                input.form-control(type='text', name = 'id', readonly)
+                                    .row
+                                        .col-md-6
+                                            .form-group
+                                                label Họ và tên lót
+                                                input.form-control(type='text' placeholder='Họ và tên lót' name = 'lastName')
+                                        .col-md-6
+                                            .form-group
+                                                label Tên
+                                                input.form-control(type='text' placeholder='Tên' name = 'firstName')
+                                    .row
+                                        .col-md-12
+                                            .form-group
+                                                label Email
+                                                input.form-control(type='email' placeholder='Email' name = 'email')
+                                .modal-footer
+                                    button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-primary(type='submit') Cập nhật
+
+                #DeleteStudentModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='DeleteStudentModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content.bg-danger
+                            .modal-header
+                                h5.modal-title Xóa
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/student/delete", method = "post")
+                                .modal-body
+                                    input(type="hidden", name="id")
+                                    p Bạn chắc chưa ?
+                                .modal-footer
+                                    button.btn.btn-danger.btn-outline-light(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-danger.btn-outline-light(type='submit') Xác nhận
+              // /.card-body
+            // /.card
+          // /.col
+        // /.row
+      // /.container-fluid
+    // /.content
+  // /.content-wrapper
+
+block style 
+    link(rel="stylesheet", href="/plugins/select2/css/select2.min.css")
+    link(rel="stylesheet", href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css")
+    link(rel="stylesheet", href="/plugins/custom/custom.css")
+block script 
+    script(src="/plugins/select2/js/select2.full.min.js")
+    script(src="/js/student/index.js")
+    script(src='/plugins/bs-custom-file-input/bs-custom-file-input.min.js')

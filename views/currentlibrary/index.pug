@@ -1,0 +1,73 @@
+extends ../layout.pug
+
+block content
+  .content-wrapper
+    // Content Header (Page header)
+    section.content-header
+      .container-fluid
+        .row.mb-2
+          .col-sm-6
+            h1 Quản lý Ra Vào
+          .col-sm-6
+            ol.breadcrumb.float-sm-right
+              li.breadcrumb-item
+                a(href='#') Home
+              li.breadcrumb-item.active Quản lý Ra Vào
+        .row
+            .col-4 
+            .col-4
+                form#form-search-student.form-inline.md-form.mr-auto.mb-4
+                    input.search.form-control.mr-sm-2(type='text' placeholder='INPUT MSSV' , name='id',onkeydown='search(this)',id='input_id',focus)
+                    btn.cccc-edit.btn.btn-outline-primary.btn-rounded.btn-sm.my-0(type='submit'  ) Check 
+                                                //- 
+            .col-3 
+
+            .col-1 
+              btn.btn-delete.btn.btn-outline-danger(type='button') Delete All
+              #DeleteStudentModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='DeleteStudentModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content.bg-danger
+                            .modal-header
+                                h5.modal-title Xóa
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/currentlibrary/deleteAll", method = "post")
+                                .modal-body
+                                    input(type="hidden", name="id")
+                                    p Bạn chắc chưa ?
+                                .modal-footer
+                                    button.btn.btn-danger.btn-outline-light(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-danger.btn-outline-light(type='submit') Xác nhận
+
+
+    section.content
+      .container-fluid
+        .row
+            .col-12             
+                .card
+                  .card-body
+                    table#tab-students.table.table-bordered.table-striped
+                        thead
+                            tr.text-center
+                              th MSSV
+                              th Họ và tên lót
+                              th Tên 
+                              th Email
+                              th Thời gian vào
+                              th Số lần ra vào thư viện
+                        tbody
+                            each student in studentList
+                                tr.text-center
+                                    td= student.id
+                                    td= student.lastName
+                                    td= student.firstName
+                                    td= student.email  
+                                    td= moment(student.updateAt).fromNow()  
+                                    td= student.countInOut  
+      
+block style 
+    link(rel="stylesheet", href="/plugins/select2/css/select2.min.css")
+    link(rel="stylesheet", href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css")
+block script 
+    script(src="/plugins/select2/js/select2.full.min.js")
+    script(src="/js/currentlibrary/index.js")

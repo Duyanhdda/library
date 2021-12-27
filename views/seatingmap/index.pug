@@ -1,0 +1,69 @@
+extends ../layout.pug
+
+block content
+  .content-wrapper
+    // Content Header (Page header)
+    section.content-header
+      .container-fluid
+        .row.mb-2
+          .col-sm-6
+            h1 Sơ đồ chỗ ngồi 
+          .col-sm-6
+            ol.breadcrumb.float-sm-right
+              li.breadcrumb-item
+                a(href='#') Home
+              li.breadcrumb-item.active Sơ đồ chỗ ngồi
+    section.content
+        .container-fluid
+            .row
+              button.btn.btn-outline-primary.custom-button(type='button' data-toggle='modal' data-target='#addmap')
+                | Insert
+              #addmap.modal.fade(role='dialog' aria-labelledby='addmap' aria-hidden='true')
+                .modal-dialog(role='document')
+                    .modal-content
+                        .modal-header
+                            h5#addmap.modal-title Thêm mới
+                            button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                span(aria-hidden='true') &times;
+                        form#form-add-map(action="/seatingmap/add", method = "post")
+                            .modal-body
+                                  .col-md-6 
+                                    .form-group
+                                        label Nhập số lượng ghế muốn thêm
+                                        input.form-control(type='number' placeholder='Nhập số lượng ghế muốn thêm' name='quantity')
+                            .modal-footer
+                                button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
+                                button.btn.btn-primary(type='submit') Thêm mới 
+              btn.btn-delete.btn.btn-outline-danger(type='button') Delete All 
+              #DeleteStudentModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='DeleteStudentModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content.bg-danger
+                            .modal-header
+                                h5.modal-title Xóa
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/seatingmap/delete", method = "post")
+                                .modal-body
+                                    input(type="hidden", name="id")
+                                    p Bạn chắc chưa ?
+                                .modal-footer
+                                    button.btn.btn-danger.btn-outline-light(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-danger.btn-outline-light(type='submit') Xác nhận
+              .col-12
+                    .card
+                        .card-body
+                            .row 
+                                .col-12
+                                    canvas#Canvas( height="730" width="1500"  style = 'border:1px solid #d3d3d3; margin-top: 30px; background-image: url("/dist/img/kms-background.jpg"); background-size: 100%;background-repeat: no-repeat;')
+                                        img(src='/dist/img/nguoi.png' id='scream' )
+                                        img(src='/dist/img/icons8-door-64.png' id='door' )
+                                        img(src='/dist/img/table.png' id='table' )
+                                        img(src='/dist/img/nguoi1.png' id='scream1' )
+
+block style 
+    link(rel="stylesheet", href="/plugins/select2/css/select2.min.css")
+    link(rel="stylesheet", href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css")
+block script 
+    script(src="/plugins/select2/js/select2.full.min.js")
+    script(src="/js/seatingmap/index.js")
+    script(src="/js/seatingmap/canvas.js")

@@ -1,0 +1,128 @@
+extends ../layout.pug
+
+block content
+  .content-wrapper
+    // Content Header (Page header)
+    section.content-header
+      .container-fluid
+        .row.mb-2
+          .col-sm-6
+            h1 Quản lý Người Dùng
+          .col-sm-6
+            ol.breadcrumb.float-sm-right
+              li.breadcrumb-item
+                a(href='#') Home
+              li.breadcrumb-item.active Quản lý Người Dùng
+      // /.container-fluid
+    // Main content
+    section.content
+      .container-fluid
+        .row
+          .col-12
+            .card
+              .card-body
+                // Button trigger modal
+                button.btn.btn-primary(type='button' data-toggle='modal' data-target='#addUserModal')
+                    | Thêm mới
+                // Modal
+                #addUserModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='addUserModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header 
+                                h5.modal-title Thêm mới
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/user/add", method = "post") 
+                                .modal-body
+                                    .form-group
+                                        label Tên đăng nhập || Email
+                                        input.form-control(type='text' placeholder='Email' name='email')
+                                    .form-group
+                                        label Mật khẩu
+                                        input.form-control(type='password' placeholder='Mật khẩu' name='password')
+                                    .form-group 
+                                        label Vai trò trên hệ thống 
+                                        select#sel-role.form-control.select2(name="role", style="width: 100%;", required)
+                                            option
+                                            option(value=0) Admin
+                                            option(value=1) Người trực thư viện
+                                .modal-footer
+                                    button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-primary(type='submit') Thêm mới
+
+                table#tab-users.table.table-bordered.table-striped
+                    thead
+                        tr.text-center
+                            //- th Số thứ tự
+                            th STT
+                            th Tên đăng nhập
+                            th Vai trò người dùng
+                            th Cập nhật lần cuối
+                            th Thao tác
+                    tbody
+                        //- - var index = 1; 
+                        each user, index in userList
+                            tr.text-center
+                                //- td= index++
+                                td=index + 1
+                                td=user.email
+                                if user.role==UserRole.ADMIN
+                                  td= "Admin"
+                                else if user.role==UserRole.LIBRARIAN
+                                  td= "Người trực thư viện"
+                                td=moment(user.updatedAt).fromNow()
+                                td.text-center
+                                    btn.btn-edit.btn.btn-primary.btn-xs(style="margin-right: 5px", data-email=user.email, data-password=user.password, data-role=user.role)
+                                        i.fas.fa-edit
+                                    btn.btn-delete.btn.btn-danger.btn-xs(style="margin-right: 5px", data-email=user.email)
+                                        i.fas.fa-trash
+                
+                #EditUserModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='EditUserModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5.modal-title Chỉnh sửa
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/user/edit", method = "post") 
+                                .modal-body
+                                    input(type="hidden", name="id")
+                                    .form-group
+                                        label Email
+                                        input.form-control(type='text' placeholder='Email' name='email' )
+                                    .form-group
+                                        label Password
+                                        input.form-control(type='password' placeholder='Password' name='password')
+                                    .form-group 
+                                        label Vai trò trên hệ thống 
+                                        select#sel-role-foredit.form-control.select2(name="role", style="width: 100%;", required)
+                                            option
+                                            option(value=0) Admin
+                                            option(value=1) Người trực thư viện
+                                .modal-footer
+                                    button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-primary(type='submit') Cập nhật
+                         
+                #DeleteUserModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='DeleteUserModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content.bg-danger
+                            .modal-header
+                                h5.modal-title Xóa
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form(action="/user/delete", method = "post")
+                                .modal-body
+                                    input(type="hidden", name="email", value=id)
+                                    p Bạn chắc chưa ?
+                                .modal-footer
+                                    button.btn.btn-danger.btn-outline-light(type='button' data-dismiss='modal') Đóng lại
+                                    button.btn.btn-danger.btn-outline-light(type='submit') Xác nhận
+              // /.card-body
+            // /.card
+          // /.col
+        // /.row
+      // /.container-fluid
+    // /.content
+  // /.content-wrapper
+block script 
+  script(src="/js/user/index.js")

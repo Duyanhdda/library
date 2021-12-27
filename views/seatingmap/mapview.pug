@@ -1,0 +1,70 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Quản lý thư viện
+  // Google Font: Source Sans Pro
+  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback')
+  // Font Awesome
+  link(rel='stylesheet' href='/plugins/fontawesome-free/css/all.min.css')
+  // DataTables
+  link(rel='stylesheet' href='/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')
+  link(rel='stylesheet' href='/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')
+  link(rel='stylesheet' href='/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')
+  link(rel='stylesheet' href='/dist/css/adminlte.min.css')
+  block style
+    section.content-header
+        .container-fluid
+            .row.mb-2
+              .col-sm-5
+              .col-sm-6
+                h1 LIBRARY 608H6
+    section.content
+        .container-fluid
+            .row
+                .col-12
+                    .card
+                        .card-body
+                            .row 
+                              canvas#Canvas( height="780" width="1800"  style = 'border:1px solid #d3d3d3; background-image: url("/dist/img/kms-background.jpg"); background-size: 100%;background-repeat: no-repeat;')
+                                  img(src='/dist/img/nguoi.png' id='scream' )
+                                  img(src='/dist/img/icons8-door-64.png' id='door' )
+                                  img(src='/dist/img/table.png' id='table' )
+                                  img(src='/dist/img/nguoi1.png' id='scream1' )
+  
+   
+footer.page-footer.font-small.blue
+  // Copyright
+  .footer-copyright.text-center.py-3
+    strong
+      | Copyright &copy; 2021 Khoa KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH.  
+    br
+    em 
+      |  Designed and built by HDA and NCT.
+
+  aside.control-sidebar.control-sidebar-dark
+script(src='/plugins/jquery/jquery.min.js')
+// Bootstrap 4
+script(src='/plugins/bootstrap/js/bootstrap.bundle.min.js')
+// DataTables  & Plugins
+script(src='/plugins/datatables/jquery.dataTables.min.js')
+script(src='/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')
+script(src='/plugins/datatables-responsive/js/dataTables.responsive.min.js')
+script(src='/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')
+script(src='/plugins/datatables-buttons/js/dataTables.buttons.min.js')
+script(src='/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')
+script(src='/plugins/jszip/jszip.min.js')
+script(src='/plugins/pdfmake/pdfmake.min.js')
+script(src='/plugins/pdfmake/vfs_fonts.js')
+script(src='/plugins/datatables-buttons/js/buttons.html5.min.js')
+script(src='/plugins/datatables-buttons/js/buttons.print.min.js')
+script(src='/plugins/datatables-buttons/js/buttons.colVis.min.js')
+// AdminLTE App
+script(src='/dist/js/adminlte.min.js')
+block style 
+    link(rel="stylesheet", href="/plugins/select2/css/select2.min.css")
+    link(rel="stylesheet", href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css")
+block script 
+    script(src="/plugins/select2/js/select2.full.min.js")
+    script(src="/js/seatingmap/index.js")
+    script(src="/js/seatingmap/canvas2.js")
