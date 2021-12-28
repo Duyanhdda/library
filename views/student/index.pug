@@ -34,16 +34,16 @@ block content
                     button.btn.btn-danger.custom-button(type='button' data-toggle='modal' data-target='#deleteAllStudentModal')
                         | Delete All
                 // Modal Delete All student 
-                #deleteAllStudentModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='deleteAllStudentModal' aria-hidden='true')
+                #deleteAllStudentModal.modal.fade(role='dialog' aria-labelledby='deleteAllStudentModal' aria-hidden='true')
                     .modal-dialog(role='document')
                         .modal-content.bg-danger
                             .modal-header
-                                h5.modal-title Xóa
+                                h5#deleteAllStudentModal.modal-title Xóa
                                 button.close(type='button' data-dismiss='modal' aria-label='Close')
                                     span(aria-hidden='true') &times;
                             form(action="/student/deleteAll", method = "post")
                                 .modal-body
-                                    input(type="hidden", name="id")
+                                    //- input(type="hidden", name="id") //Phải xóa, để lại nó sẽ không checkId khi add student
                                     p Bạn chắc chưa ?
                                 .modal-footer
                                     button.btn.btn-danger.btn-outline-light(type='button' data-dismiss='modal') Đóng lại
@@ -73,7 +73,40 @@ block content
                                                   button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
                              
                 // Modal add Student
-                
+                #addStudentModal.modal.fade(role='dialog' aria-labelledby='addStudentModal' aria-hidden='true')
+                    .modal-dialog(role='document')
+                        .modal-content
+                            .modal-header
+                                h5#addStudentModal.modal-title Thêm mới
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            form#form-add-student(action="/student/add", method = "post")
+                                .modal-body
+                                    .row
+                                        .col-md-6
+                                            .form-group
+                                                label MSSV
+                                                input.form-control(type='text' placeholder='MSSV' name='id')
+                                    .row
+                                        .col-md-6
+                                            .form-group
+                                                .row 
+                                                label Họ và tên lót
+                                                input.form-control(type='text' placeholder='Họ và tên lót' name='lastName')
+                                        .col-md-6
+                                            .form-group
+                                                .row 
+                                                label Tên
+                                                input.form-control(type='text' placeholder='Tên' name='firstName')
+                                    .row
+                                        .col-md-12
+                                            .form-group
+                                                .row 
+                                                label Email
+                                                input.form-control(type='email' placeholder='Email' name='email')
+                                .modal-footer
+                                  button.btn.btn-primary(type='submit') Thêm mới 
+                                  button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
                 table#tab-students.table.table-bordered.table-striped
                   thead
                     tr.text-center
@@ -131,7 +164,7 @@ block content
                                             table#historyModal.table.table-bordered.table-striped
                                               thead
                                                 tr.text-center
-                                                  th Lượt vào
+                                                  th Lượt ra vào
                                                   th Thời gian
                                 .modal-footer
                                     button.btn.btn-secondary(type='button' data-dismiss='modal') Đóng lại
